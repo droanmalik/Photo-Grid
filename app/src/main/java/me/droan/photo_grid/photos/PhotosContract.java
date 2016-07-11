@@ -14,14 +14,17 @@ public class PhotosContract {
     interface View extends BaseView<Presenter> {
         void showPhotos(List<Photo> photos);
 
-        void flip(int currentState);
+        void flipFront();
+
+        void flipBack();
     }
 
     interface Presenter extends BasePresenter {
         void result(int requestCode, int resultCode);
 
-        void loadhotos(List<Photo> photos);
+        void loadPhotos(List<Photo> photos);
 
-        boolean isShowingBack(int position);
+        void checkFlip(int position);
+
     }
 }

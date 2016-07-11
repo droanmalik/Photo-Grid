@@ -27,13 +27,21 @@ public class PhotosPresenter implements PhotosContract.Presenter {
     }
 
     @Override
-    public void loadhotos(List<Photo> photos) {
+    public void loadPhotos(List<Photo> photos) {
         this.photos = photos;
         photosView.showPhotos(photos);
     }
 
     @Override
-    public boolean isShowingBack(int position) {
+    public void checkFlip(int position) {
+        if (isShowingBack(position)) {
+            photosView.flipFront();
+        } else {
+            photosView.flipBack();
+        }
+    }
+
+    private boolean isShowingBack(int position) {
         boolean _isShowingBack = photos.get(position).isShowingBack;
         updateIsShowingBack(position, _isShowingBack);
         return _isShowingBack;
@@ -46,13 +54,6 @@ public class PhotosPresenter implements PhotosContract.Presenter {
 
     @Override
     public void start() {
-        service.listRepositories("Landscapes", "popular", new PhotosApi.DataChangeListener(
-
-        ) {
-            @Override
-            public void onDataAdded(List<Photo> photos) {
-                loadhotos(photos);
-            }
-        });
+        service.listRepositories("Landscapes", "popular", photos1 -> loadPhotos(photos1));
     }
 }

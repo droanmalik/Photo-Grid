@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -32,6 +34,8 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
     RecyclerView recyclerView;
     PhotosAdapter adapter;
     PhotosContract.Presenter photosPresenter;
+    private ImageView background;
+    private TextView title;
     private AnimatorSet animateImageBack; //= (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_image_back);
     private AnimatorSet animateImageFront;// = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_image_front);
     private AnimatorSet animateTextBack;// = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_text_back);
@@ -72,17 +76,9 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
     private void initRecyclerView() {
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         adapter = new PhotosAdapter(getActivity(), Picasso.with(getContext()), (viewGroup, position) -> {
-            if (photosPresenter.isShowingBack(position)) {
-                animateImageBack.setTarget(viewGroup.getChildAt(0));
-                animateTextBack.setTarget(viewGroup.getChildAt(1));
-                animateImageBack.start();
-                animateTextBack.start();
-            } else {
-                animateImageFront.setTarget(viewGroup.getChildAt(0));
-                animateTextFront.setTarget(viewGroup.getChildAt(1));
-                animateImageFront.start();
-                animateTextFront.start();
-            }
+            background = (ImageView) viewGroup.getChildAt(0);
+            title = (TextView) viewGroup.getChildAt(1);
+            photosPresenter.checkFlip(position);
         });
         recyclerView.setAdapter(adapter);
     }
@@ -99,8 +95,19 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
     }
 
     @Override
-    public void flip(int currentState) {
+    public void flipFront() {
+        animateImageBack.setTarget(background);
+        animateTextBack.setTarget(title);
+        animateImageBack.start();
+        animateTextBack.start();
+    }
 
+    @Override
+    public void flipBack() {
+        animateImageFront.setTarget(background);
+        animateTextFront.setTarget(title);
+        animateImageFront.start();
+        animateTextFront.start();
     }
 
     @Override
