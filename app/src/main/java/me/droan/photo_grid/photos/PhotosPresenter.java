@@ -2,7 +2,7 @@ package me.droan.photo_grid.photos;
 
 import java.util.List;
 
-import me.droan.photo_grid.data.PhotosApi;
+import me.droan.photo_grid.repository.PhotosApi;
 import me.droan.photo_grid.model.photos.Photo;
 
 /**

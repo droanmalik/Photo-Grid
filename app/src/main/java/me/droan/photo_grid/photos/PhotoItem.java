@@ -43,5 +43,16 @@ public class PhotoItem extends FrameLayout {
     public void bind(Photo photo, Picasso picasso) {
         picasso.load(photo.getImage_url()).into(photoImageView);
         title.setText(photo.getName());
+        checkVisibility(photo);
+    }
+
+    private void checkVisibility(Photo photo) {
+        if ((photo.isShowingBack())) {
+            title.setAlpha(1.0f);
+            photoImageView.setAlpha(0.0f);
+        } else {
+            title.setAlpha(0);
+            photoImageView.setAlpha(1.0f);
+        }
     }
 }
