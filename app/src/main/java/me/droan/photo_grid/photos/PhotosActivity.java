@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import me.droan.photo_grid.R;
-import me.droan.photo_grid.data.PhotosApi;
+import me.droan.photo_grid.repository.PhotosApi;
 import me.droan.photo_grid.util.ActivityUtil;
 
 public class PhotosActivity extends AppCompatActivity {
