@@ -41,7 +41,7 @@ public class PhotoItem extends FrameLayout {
     }
 
     public void bind(Photo photo, Picasso picasso) {
-        picasso.load(photo.image_url).into(photoImageView);
-        title.setText(photo.name);
+        picasso.load(photo.getImage_url()).into(photoImageView);
+        title.setText(photo.getName());
     }
 }

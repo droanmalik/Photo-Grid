@@ -42,14 +42,14 @@ public class PhotosPresenter implements PhotosContract.Presenter {
     }
 
     private boolean isShowingBack(int position) {
-        boolean _isShowingBack = photos.get(position).isShowingBack;
+        boolean _isShowingBack = photos.get(position).isShowingBack();
         updateIsShowingBack(position, _isShowingBack);
         return _isShowingBack;
     }
 
     private boolean updateIsShowingBack(int position, boolean _isShowingBack) {
-        photos.get(position).isShowingBack = !_isShowingBack;
-        return photos.get(position).isShowingBack;
+        photos.get(position).setShowingBack(!_isShowingBack);
+        return photos.get(position).isShowingBack();
     }
 
     @Override
