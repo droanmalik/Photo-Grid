@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -18,7 +19,8 @@ import me.droan.photo_grid.model.photos.Photo;
 public class PhotoItem extends FrameLayout {
     @Bind(R.id.photo)
     ImageView photoImageView;
-    private Picasso picasso;
+    @Bind(R.id.title)
+    TextView title;
 
     public PhotoItem(Context context) {
         super(context);
@@ -40,5 +42,6 @@ public class PhotoItem extends FrameLayout {
 
     public void bind(Photo photo, Picasso picasso) {
         picasso.load(photo.image_url).into(photoImageView);
+        title.setText(photo.name);
     }
 }

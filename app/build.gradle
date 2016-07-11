@@ -30,6 +30,10 @@ android {
     buildTypes.each {
         it.buildConfigField 'String', 'API_KEY', My500pxApiKey
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {

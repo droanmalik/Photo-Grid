@@ -8,4 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:alpha="0"
+        android:gravity="center" />
 </me.droan.photo_grid.photos.PhotoItem>

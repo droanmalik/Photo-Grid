@@ -21,5 +21,7 @@ public class PhotosContract {
         void result(int requestCode, int resultCode);
 
         void loadhotos(List<Photo> photos);
+
+        boolean isShowingBack(int position);
     }
 }

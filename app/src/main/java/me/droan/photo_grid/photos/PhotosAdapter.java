@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.squareup.picasso.Picasso;
 
@@ -20,11 +21,13 @@ import me.droan.photo_grid.model.photos.Photo;
 public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.Holder> {
     private Context context;
     private Picasso picasso;
+    private onClickListener listener;
     private List<Photo> photos = new ArrayList<>();
 
-    public PhotosAdapter(Context context, Picasso picasso) {
+    public PhotosAdapter(Context context, Picasso picasso, onClickListener listener) {
         this.context = context;
         this.picasso = picasso;
+        this.listener = listener;
     }
 
     @Override
@@ -36,7 +39,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.Holder> {
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        holder.bind(photos.get(position), picasso);
+        holder.bind(photos.get(position), picasso, listener);
     }
 
     @Override
@@ -49,18 +52,24 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.Holder> {
         notifyDataSetChanged();
     }
 
+    public interface onClickListener {
+        void onClick(ViewGroup viewGroup, int position);
+    }
+
     class Holder extends RecyclerView.ViewHolder {
         PhotoItem photoItem;
+        private onClickListener listener;
 
-        public Holder(View photoItem) {
+        public Holder(final View photoItem) {
             super(photoItem);
             this.photoItem = (PhotoItem) photoItem;
+            photoItem.setOnClickListener(v -> listener.onClick((FrameLayout) photoItem, getAdapterPosition()));
         }
 
 
-        public void bind(Photo photo, Picasso picasso) {
+        public void bind(Photo photo, Picasso picasso, onClickListener listener) {
+            this.listener = listener;
             photoItem.bind(photo, picasso);
-
 
         }
     }

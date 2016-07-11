@@ -25,13 +25,6 @@ public class PhotosApi {
     private static final String PHOTOS_ENDPOINT = "https://api.500px.com/v1/";
     private final PhotosService service;
 
-    public interface PhotosService {
-        @GET("photos?consumer_key=" + BuildConfig.API_KEY)
-        Call<PhotosModel> getPopularMovies(
-                @Query("only") String category,
-                @Query("feature") String feature);
-    }
-
     public PhotosApi() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.HEADERS);
@@ -45,13 +38,6 @@ public class PhotosApi {
                 .build();
 
         service = retrofit.create(PhotosService.class);
-    }
-
-    public interface PhotosService {
-        @GET("photos?consumer_key=" + BuildConfig.API_KEY)
-        Call<PhotosModel> getPopularMovies(
-                @Query("only") String category,
-                @Query("feature") String feature);
     }
 
     public void listRepositories(String category, String feature, final DataChangeListener listener) {
@@ -68,6 +54,13 @@ public class PhotosApi {
             }
         });
 
+    }
+
+    public interface PhotosService {
+        @GET("photos?consumer_key=" + BuildConfig.API_KEY)
+        Call<PhotosModel> getPopularMovies(
+                @Query("only") String category,
+                @Query("feature") String feature);
     }
 
     public interface DataChangeListener {

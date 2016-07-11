@@ -12,6 +12,7 @@ public class PhotosPresenter implements PhotosContract.Presenter {
 
     private PhotosFragment photosView;
     private PhotosApi service;
+    private List<Photo> photos;
 
     public PhotosPresenter(PhotosFragment photosView, PhotosApi service) {
 
@@ -27,7 +28,20 @@ public class PhotosPresenter implements PhotosContract.Presenter {
 
     @Override
     public void loadhotos(List<Photo> photos) {
+        this.photos = photos;
         photosView.showPhotos(photos);
+    }
+
+    @Override
+    public boolean isShowingBack(int position) {
+        boolean _isShowingBack = photos.get(position).isShowingBack;
+        updateIsShowingBack(position, _isShowingBack);
+        return _isShowingBack;
+    }
+
+    private boolean updateIsShowingBack(int position, boolean _isShowingBack) {
+        photos.get(position).isShowingBack = !_isShowingBack;
+        return photos.get(position).isShowingBack;
     }
 
     @Override

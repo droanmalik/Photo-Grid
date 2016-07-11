@@ -1,5 +1,7 @@
 package me.droan.photo_grid.photos;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,6 +32,10 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
     RecyclerView recyclerView;
     PhotosAdapter adapter;
     PhotosContract.Presenter photosPresenter;
+    private AnimatorSet animateImageBack; //= (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_image_back);
+    private AnimatorSet animateImageFront;// = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_image_front);
+    private AnimatorSet animateTextBack;// = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_text_back);
+    private AnimatorSet animateTextFront;// = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_text_front);
 
     public static PhotosFragment newInstance() {
 
@@ -37,6 +43,16 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
         PhotosFragment fragment = new PhotosFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        animateImageBack = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_image_back);
+        animateImageFront = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_image_front);
+        animateTextBack = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_text_back);
+        animateTextFront = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_text_front);
+
     }
 
     @Nullable
@@ -55,7 +71,19 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
 
     private void initRecyclerView() {
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        adapter = new PhotosAdapter(getActivity(), Picasso.with(getContext()));
+        adapter = new PhotosAdapter(getActivity(), Picasso.with(getContext()), (viewGroup, position) -> {
+            if (photosPresenter.isShowingBack(position)) {
+                animateImageBack.setTarget(viewGroup.getChildAt(0));
+                animateTextBack.setTarget(viewGroup.getChildAt(1));
+                animateImageBack.start();
+                animateTextBack.start();
+            } else {
+                animateImageFront.setTarget(viewGroup.getChildAt(0));
+                animateTextFront.setTarget(viewGroup.getChildAt(1));
+                animateImageFront.start();
+                animateTextFront.start();
+            }
+        });
         recyclerView.setAdapter(adapter);
     }
 
