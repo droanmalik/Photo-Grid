@@ -37,10 +37,8 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
     private PhotosContract.Presenter photosPresenter;
     private ImageView background;
     private TextView title;
-    private AnimatorSet animateImageBack;
-    private AnimatorSet animateImageFront;
-    private AnimatorSet animateTextBack;
-    private AnimatorSet animateTextFront;
+    private AnimatorSet animateImageBack, animateImageFront, animateTextBack, animateTextFront;
+
 
     public static PhotosFragment newInstance() {
 

@@ -1,7 +1,10 @@
 package me.droan.photo_grid.repository;
 
+import android.support.annotation.StringDef;
 import android.util.Log;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 import me.droan.photo_grid.BuildConfig;
@@ -21,6 +24,9 @@ import retrofit2.http.Query;
  * Created by drone on 11-07-2016.
  */
 public class PhotosApi {
+    public static final String CATEGORY_LANDSCAPE = "Landscapes";
+    public static final String CATEGORY_ANIMALS = "Animals";
+    public static final String CATEGORY_FOOD = "Food";
     private static final String TAG = "PhotosApi";
     private static final String PHOTOS_ENDPOINT = "https://api.500px.com/v1/";
     private final PhotosService service;
@@ -40,7 +46,7 @@ public class PhotosApi {
         service = retrofit.create(PhotosService.class);
     }
 
-    public void listRepositories(String category, String feature, final DataChangeListener listener) {
+    public void listRepositories(@CategoryName String category, String feature, final DataChangeListener listener) {
         service.fetchPhotos(category, feature).enqueue(new Callback<PhotoList>() {
             @Override
             public void onResponse(Call<PhotoList> call, Response<PhotoList> response) {
@@ -57,15 +63,22 @@ public class PhotosApi {
         });
 
     }
-
     public interface PhotosService {
         @GET("photos?consumer_key=" + BuildConfig.API_KEY)
         Call<PhotoList> fetchPhotos(
                 @Query("only") String category,
                 @Query("feature") String feature);
     }
-
     public interface DataChangeListener {
         void onDataAdded(List<Photo> photos);
+    }
+
+    @Retention(RetentionPolicy.SOURCE)
+    @StringDef({
+            CATEGORY_LANDSCAPE,
+            CATEGORY_ANIMALS,
+            CATEGORY_FOOD
+    })
+    public @interface CategoryName {
     }
 }
