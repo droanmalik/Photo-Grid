@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.squareup.picasso.Picasso;
 
@@ -55,19 +54,16 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.Holder> {
 
     class Holder extends RecyclerView.ViewHolder {
         PhotoItem photoItem;
-        private onClickListener listener;
 
         public Holder(final View photoItem) {
             super(photoItem);
             this.photoItem = (PhotoItem) photoItem;
-            photoItem.setOnClickListener(v -> listener.onClick((FrameLayout) photoItem, getAdapterPosition()));
         }
 
 
         public void bind(Photo photo, Picasso picasso, onClickListener listener) {
-            this.listener = listener;
             photoItem.bind(photo, picasso);
-
+            photoItem.setOnClickListener(v -> listener.onClick(photoItem, getAdapterPosition()));
         }
     }
 }
