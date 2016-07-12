@@ -44,8 +44,10 @@ public class PhotosApi {
         service.fetchPhotos(category, feature).enqueue(new Callback<PhotoList>() {
             @Override
             public void onResponse(Call<PhotoList> call, Response<PhotoList> response) {
-                PhotoList model = response.body();
-                listener.onDataAdded(model.photos);
+                if (response.isSuccessful()) {
+                    PhotoList model = response.body();
+                    listener.onDataAdded(model.photos);
+                }
             }
 
             @Override
