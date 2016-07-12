@@ -75,7 +75,7 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
 
     private void initRecyclerView() {
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        adapter = new PhotosAdapter(getActivity(), Picasso.with(getContext()), (viewGroup, position) -> {
+        adapter = new PhotosAdapter(Picasso.with(getContext()), (viewGroup, position) -> {
             background = (ImageView) viewGroup.getChildAt(0);
             title = (TextView) viewGroup.getChildAt(1);
             photosPresenter.checkFlip(position);

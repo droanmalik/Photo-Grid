@@ -1,6 +1,5 @@
 package me.droan.photo_grid.photos;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,20 +18,18 @@ import me.droan.photo_grid.model.photos.Photo;
  * Created by drone on 11-07-2016.
  */
 public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.Holder> {
-    private Context context;
     private Picasso picasso;
     private onClickListener listener;
     private List<Photo> photos = new ArrayList<>();
 
-    public PhotosAdapter(Context context, Picasso picasso, onClickListener listener) {
-        this.context = context;
+    public PhotosAdapter(Picasso picasso, onClickListener listener) {
         this.picasso = picasso;
         this.listener = listener;
     }
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.photo_item, parent, false);
         return new Holder(view);
     }
