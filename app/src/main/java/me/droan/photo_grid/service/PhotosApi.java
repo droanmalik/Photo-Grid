@@ -1,4 +1,4 @@
-package me.droan.photo_grid.repository;
+package me.droan.photo_grid.service;
 
 import android.support.annotation.StringDef;
 import android.util.Log;
@@ -9,7 +9,7 @@ import java.util.List;
 
 import me.droan.photo_grid.BuildConfig;
 import me.droan.photo_grid.model.photos.Photo;
-import me.droan.photo_grid.model.photos.PhotoList;
+import me.droan.photo_grid.model.photos.PhotoRepository;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -47,17 +47,17 @@ public class PhotosApi {
     }
 
     public void listRepositories(@CategoryName String category, String feature, final DataChangeListener listener) {
-        service.fetchPhotos(category, feature).enqueue(new Callback<PhotoList>() {
+        service.fetchPhotos(category, feature).enqueue(new Callback<PhotoRepository>() {
             @Override
-            public void onResponse(Call<PhotoList> call, Response<PhotoList> response) {
+            public void onResponse(Call<PhotoRepository> call, Response<PhotoRepository> response) {
                 if (response.isSuccessful()) {
-                    PhotoList model = response.body();
+                    PhotoRepository model = response.body();
                     listener.onDataAdded(model.photos);
                 }
             }
 
             @Override
-            public void onFailure(Call<PhotoList> call, Throwable t) {
+            public void onFailure(Call<PhotoRepository> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getMessage() + call.toString());
             }
         });
@@ -65,7 +65,7 @@ public class PhotosApi {
     }
     public interface PhotosService {
         @GET("photos?consumer_key=" + BuildConfig.API_KEY)
-        Call<PhotoList> fetchPhotos(
+        Call<PhotoRepository> fetchPhotos(
                 @Query("only") String category,
                 @Query("feature") String feature);
     }

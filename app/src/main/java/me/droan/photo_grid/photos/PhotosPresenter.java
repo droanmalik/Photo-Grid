@@ -3,7 +3,7 @@ package me.droan.photo_grid.photos;
 import java.util.List;
 
 import me.droan.photo_grid.model.photos.Photo;
-import me.droan.photo_grid.repository.PhotosApi;
+import me.droan.photo_grid.service.PhotosApi;
 
 /**
  * Created by drone on 11-07-2016.
@@ -55,6 +55,6 @@ public class PhotosPresenter implements PhotosContract.Presenter {
 
     @Override
     public void start() {
-        service.listRepositories(PhotosApi.CATEGORY_ANIMALS, "popular", photos1 -> loadPhotos(photos1));
+        service.listRepositories(PhotosApi.CATEGORY_ANIMALS, "popular", this::loadPhotos);
     }
 }
