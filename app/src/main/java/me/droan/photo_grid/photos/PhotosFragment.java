@@ -2,6 +2,7 @@ package me.droan.photo_grid.photos;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -29,17 +30,17 @@ import me.droan.photo_grid.model.photos.Photo;
  */
 public class PhotosFragment extends Fragment implements PhotosContract.View {
     @Bind(R.id.toolbar)
-    Toolbar toolbar;
+    public Toolbar toolbar;
     @Bind(R.id.recyclerView)
-    RecyclerView recyclerView;
-    PhotosAdapter adapter;
-    PhotosContract.Presenter photosPresenter;
+    public RecyclerView recyclerView;
+    private PhotosAdapter adapter;
+    private PhotosContract.Presenter photosPresenter;
     private ImageView background;
     private TextView title;
-    private AnimatorSet animateImageBack; //= (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_image_back);
-    private AnimatorSet animateImageFront;// = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_image_front);
-    private AnimatorSet animateTextBack;// = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_text_back);
-    private AnimatorSet animateTextFront;// = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_text_front);
+    private AnimatorSet animateImageBack;
+    private AnimatorSet animateImageFront;
+    private AnimatorSet animateTextBack;
+    private AnimatorSet animateTextFront;
 
     public static PhotosFragment newInstance() {
 
@@ -52,10 +53,11 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        animateImageBack = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_image_back);
-        animateImageFront = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_image_front);
-        animateTextBack = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_text_back);
-        animateTextFront = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip_text_front);
+        Context context = getContext();
+        animateImageBack = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.flip_image_back);
+        animateImageFront = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.flip_image_front);
+        animateTextBack = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.flip_text_back);
+        animateTextFront = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.flip_text_front);
 
     }
 
@@ -76,8 +78,8 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
     private void initRecyclerView() {
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         adapter = new PhotosAdapter(Picasso.with(getContext()), (viewGroup, position) -> {
-            background = (ImageView) viewGroup.getChildAt(0);
-            title = (TextView) viewGroup.getChildAt(1);
+            background = (ImageView) viewGroup.findViewById(R.id.photo);
+            title = (TextView) viewGroup.findViewById(R.id.title);
             photosPresenter.checkFlip(position);
         });
         recyclerView.setAdapter(adapter);
