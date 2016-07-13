@@ -1,2 +1,2 @@
 # Photo-Grid
-Please use the prodRelease build variant for viewing the app.
+Please use the prodDebug build variant for viewing the app.
