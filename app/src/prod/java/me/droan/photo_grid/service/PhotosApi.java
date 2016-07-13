@@ -61,7 +61,6 @@ public class PhotosApi {
                 Log.d(TAG, "onFailure: " + t.getMessage() + call.toString());
             }
         });
-
     }
     public interface PhotosService {
         @GET("photos?consumer_key=" + BuildConfig.API_KEY)

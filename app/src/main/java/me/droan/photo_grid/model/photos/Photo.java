@@ -3,20 +3,16 @@ package me.droan.photo_grid.model.photos;
 
 public class Photo {
 
-    private int id;
     private String name;
     private String image_url;
-    private int width;
-    private int height;
     private boolean isShowingBack;
 
-    public int getId() {
-        return id;
+    public Photo(String name, String image_url, boolean isShowingBack) {
+        this.name = name;
+        this.image_url = image_url;
+        this.isShowingBack = isShowingBack;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -32,22 +28,6 @@ public class Photo {
 
     public void setImage_url(String image_url) {
         this.image_url = image_url;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
     }
 
     public boolean isShowingBack() {
