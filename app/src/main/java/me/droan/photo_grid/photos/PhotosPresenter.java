@@ -11,11 +11,11 @@ import me.droan.photo_grid.service.PhotosApi;
 public class PhotosPresenter implements PhotosContract.Presenter {
 
 
-    private PhotosFragment photosView;
+    private PhotosContract.View photosView;
     private PhotosApi service;
     private List<Photo> photos;
 
-    public PhotosPresenter(PhotosFragment photosView, PhotosApi service) {
+    public PhotosPresenter(PhotosContract.View photosView, PhotosApi service) {
 
         this.photosView = photosView;
         this.service = service;
